@@ -13,7 +13,7 @@ def callback(indata, frames, time_info, status):
 
 def record_audio(filename, duration=10, samplerate=16000):
     print("[Recorder] Recording...")
-    with sf.SoundFile(filename, mode='x', samplerate=samplerate, channels=1, subtype='PCM_16') as file:
+    with sf.SoundFile(filename, mode='w', samplerate=samplerate, channels=1, subtype='PCM_16') as file:
         with sd.InputStream(samplerate=samplerate, channels=1, callback=callback):
             start_time = time.time()
             while time.time() - start_time < duration:
