@@ -8,3 +8,18 @@ wheels/
 
 # Virtual environments
 .venv
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE directories
+.vscode/
+.idea/
+
+# Generated audio files
+*.wav
+*.mp3
+
+# Environment variables
+.env
