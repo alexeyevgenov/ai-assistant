@@ -2,13 +2,26 @@ import pvporcupine
 import pyaudio
 import struct
 import asyncio
+import os
 
 class WakeWordListener:
     def __init__(self, keyword="jarvis"):
         self.keyword = keyword
-        self.porcupine = pvporcupine.create(keyword_paths=[
-            pvporcupine.KEYWORD_PATHS[keyword]
-        ])
+        # Initialize attributes to None
+        self.porcupine = None
+        self.pa = None
+        self.stream = None
+
+        access_key = os.getenv("PVPORCUPINE_ACCESS_KEY")
+        if not access_key:
+            raise ValueError("PVPORCUPINE_ACCESS_KEY environment variable not set.")
+
+        self.porcupine = pvporcupine.create(
+            access_key=access_key,
+            keyword_paths=[
+                pvporcupine.KEYWORD_PATHS[keyword]
+            ]
+        )
         self.pa = pyaudio.PyAudio()
         self.stream = self.pa.open(
             rate=self.porcupine.sample_rate,
