@@ -16,12 +16,17 @@ class WakeWordListener:
         if not access_key:
             raise ValueError("PVPORCUPINE_ACCESS_KEY environment variable not set.")
 
-        self.porcupine = pvporcupine.create(
-            access_key=access_key,
-            keyword_paths=[
-                pvporcupine.KEYWORD_PATHS[keyword]
-            ]
-        )
+        try:
+            self.porcupine = pvporcupine.create(
+                access_key=access_key,
+                keyword_paths=[
+                    pvporcupine.KEYWORD_PATHS[keyword]
+                ]
+            )
+        except pvporcupine.PorcupineActivationLimitError as e:
+            print("[WakeWord] Porcupine activation limit reached. Please check your Picovoice Console and update your access key.")
+            raise e
+
         self.pa = pyaudio.PyAudio()
         self.stream = self.pa.open(
             rate=self.porcupine.sample_rate,
