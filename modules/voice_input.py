@@ -11,7 +11,7 @@ def callback(indata, frames, time_info, status):
         print(status)
     q.put(indata.copy())
 
-def record_audio(filename, duration=10, samplerate=16000):
+def record_audio(filename, duration=3, samplerate=16000):
     print("[Recorder] Recording...")
     with sf.SoundFile(filename, mode='w', samplerate=samplerate, channels=1, subtype='PCM_16') as file:
         with sd.InputStream(samplerate=samplerate, channels=1, callback=callback):

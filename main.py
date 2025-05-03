@@ -15,14 +15,16 @@ async def main():
     wake_listener = WakeWordListener()
 
     while True:
-        await wake_listener.wait_for_wake_word()
-        print("[AI-Mentor] Wake word detected. Listening...")
+        # await wake_listener.wait_for_wake_word()
+        # print("[AI-Mentor] Wake word detected. Listening...")
 
         audio_file = record_audio("output.wav")
         print("[AI-Mentor] Audio recorded. Transcribing...")
 
-        text = transcribe_audio(audio_file)
-        print(f"[You]: {text}")
+        # text = transcribe_audio(audio_file)
+        # print(f"[You]: {text}")
+
+        text = "Which new features did you get with the latest update?"
 
         response = get_gpt_response(text)
         print(f"[AI-Mentor]: {response}")
