@@ -1,10 +1,10 @@
 import requests
 import os
-from playsound import playsound
+# from playsound import playsound
+import pygame
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")  # set to a specific voice from your ElevenLabs account
-
 
 def speak_text(text, filename="response.mp3"):
     print("[TTS] Sending text to ElevenLabs...")
@@ -28,4 +28,8 @@ def speak_text(text, filename="response.mp3"):
         f.write(response.content)
 
     print(f"[TTS] Playing {filename}...")
-    playsound(filename)
+    pygame.mixer.init()
+    pygame.mixer.music.load(filename)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
